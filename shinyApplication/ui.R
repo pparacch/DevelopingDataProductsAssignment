@@ -34,14 +34,14 @@ shinyUI(fluidPage(
               "It was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and",
               "10 aspects of automobile design and performance for 32 automobiles (1973–74 models)."),
             
-            helpText("How to:"),
-            helpText("Selecting a specific variable is possible to view how the fuel consumption changes",
-                     "based on the available observations.")
+            helpText("Note:"),
+            helpText("Plot: a scatterplot of the observations including the fitted linear model with 'mpg' (as the response) and selected",
+                    "variable as the predictor is shown. If the selected variable is categorical a box-and-whiskers plot is added.")
             
             ),
         # The main panel contains a set of tabs
         # Plot: 
-        #   - for continuous variables shows the observations, and linear regression based on given observations
+        #   - scatterplot of available observations, and predictions of fitted linear regression based on given observations
         #   - for categorical variables show a box-and-whisker plot with outliers
         #
         # Summary, some basic information about the selected variables, the linear regression model info (for continuous variables)
@@ -52,7 +52,13 @@ shinyUI(fluidPage(
             tabsetPanel(
                 tabPanel("Plot",
                          br(),
-                         plotOutput("scatterPlot")
+                         plotOutput("scatterPlot"),
+                         # Optional boxPlot for categorical variables
+                         conditionalPanel("input.variable == 'cyl' || 
+                                          input.variable == 'am' || input.variable == 'gear' || 
+                                          input.variable == 'vs' || input.variable == 'carb'",
+                                          plotOutput("boxPlot")
+                                          )
                          ),
                 tabPanel("Summary"),
                 tabPanel("Data", 

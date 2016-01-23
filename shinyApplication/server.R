@@ -21,11 +21,12 @@ shinyServer(function(input, output) {
     # Output: the plot to be rendered in the UI
     output$boxPlot <- renderPlot({
         # If selected variable is categorical
-        if (!any(input$variable == c("cyl", "am", "gear", "vs", "carb"))) {
+        if (any(input$variable == c("cyl", "am", "gear", "vs", "carb"))) {
             boxplot(
                 as.formula(formulaText()),
                 data = data,
-                outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable
+                outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable,
+                main = paste("Box-and-whisker plot", formulaText()) 
             )
         }
     })
