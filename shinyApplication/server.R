@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
     # Return the formula caption
     output$caption <- renderText({
         if(input$variable != ""){
-            formulaText()
+            paste("Formula:" , formulaText())
         }else{
             ""
         }
