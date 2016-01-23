@@ -18,31 +18,40 @@ shinyServer(function(input, output) {
         paste("Formula:" , formulaText())
     })
     
-    # Output: the plot to be renedered in the UI
-    output$plot <- renderPlot({
+    # Output: the plot to be rendered in the UI
+    output$boxPlot <- renderPlot({
         # If selected variable is categorical
-        if(any(input$variable == c("cyl", "am", "gear", "vs", "carb"))){
-            boxplot(as.formula(formulaText()),
-                    data = data,
-                    outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable)
-        }else{
-            # If selected variable is continuous
-            g <- ggplot(data, aes(y = data[,"mpg"], x = data[,input$variable]))
-            g <- g + xlab(input$variable)
-            g <- g + ylab("mpg")
-            g <- g + geom_point(size = 5, color = "blue", alpha = 0.2)
-            g <- g + geom_smooth(method = "lm", color = "black")
-            g
-            
+        if (!any(input$variable == c("cyl", "am", "gear", "vs", "carb"))) {
+            boxplot(
+                as.formula(formulaText()),
+                data = data,
+                outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable
+            )
         }
+    })
+    
+    # Output: the plot to be rendered in the UI
+    output$scatterPlot <- renderPlot({
+        # If selected variable is continuous
+        g <-
+            ggplot(data, aes(y = data[,"mpg"], x = data[,input$variable]))
+        g <- g + xlab(input$variable)
+        g <- g + ylab("mpg")
+        g <- g + ggtitle(paste("Scatterplot", formulaText()))
+        g <- g + geom_point(size = 5, color = "blue", alpha = 0.2)
+        g <- g + geom_smooth(method = "lm", color = "black")
+        g
+        
+        
     })
     
     # Output: a dataTable containing the raw data - car model, mpg, and selected variable
     output$rawData <- renderDataTable({
         data$models <- row.names(data)
         data[, c("models", "mpg", input$variable)]
-    }, options = list(pageLength=10,lengthMenu=list(c(5,10,15,25,40,-1), c("5","10","15","25","40","All")))
-    )
+    }, options = list(pageLength = 10,lengthMenu = list(
+        c(5,10,15,25,40,-1), c("5","10","15","25","40","All")
+    )))
     
     
 })

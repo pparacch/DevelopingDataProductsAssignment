@@ -3,7 +3,7 @@ library(shiny)
 shinyUI(fluidPage(
 
     # Application title
-    titlePanel("Exploring 'Miles Per Gallons' consumptions using the Motor Trend Car Road Tests dataset."),
+    titlePanel("Exploring 'Miles Per Gallons' consumptions (based on Motor Trend Car Road Tests)"),
     br(),
     
     # Sidebar 
@@ -11,6 +11,8 @@ shinyUI(fluidPage(
         #Sidebar Panel - a box containing the list of variables that could be selected in order to explore how
         # consumption (mile per gallons) depends on such a variable.
         sidebarPanel(
+            p("Please select a specific variable to view how the fuel consumption changes",
+                     "based on the available observations."),
             # Select the variable from the mtcars dataset that you would like to use as a predictor
             selectInput(inputId = "variable",
                         label = "Variable:",
@@ -26,14 +28,15 @@ shinyUI(fluidPage(
                                     "Number Of Carburetors" = "carb")
                         ),
             br(),
-            hr(),
             tags$h3(textOutput("caption")),
             br(),
-            helpText("Note:"),
-            helpText("* The data set used for such exploration analysis is the 'mtcars' dataset."),
-            helpText("* The response is 'mpg' (it cannot be changed) while the predictor/ regressor is selected using the 'Variable' box."),
-            br(),
-            helpText("Selecting a specific predictor is possible to view how the consumption changes for the available observations.")
+            p("The data used for such exploration analysis is the 'mtcars' dataset - Motor Trend Car Road Tests.",
+              "It was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and",
+              "10 aspects of automobile design and performance for 32 automobiles (1973–74 models)."),
+            
+            helpText("How to:"),
+            helpText("Selecting a specific variable is possible to view how the fuel consumption changes",
+                     "based on the available observations.")
             
             ),
         # The main panel contains a set of tabs
@@ -48,7 +51,8 @@ shinyUI(fluidPage(
         mainPanel(
             tabsetPanel(
                 tabPanel("Plot",
-                         plotOutput("plot")
+                         br(),
+                         plotOutput("scatterPlot")
                          ),
                 tabPanel("Summary"),
                 tabPanel("Data", 
