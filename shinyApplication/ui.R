@@ -11,8 +11,7 @@ shinyUI(fluidPage(
             # Select the variable from the mtcars dataset that you would like to investigate
             selectInput(inputId = "variable",
                         label = "Variable:",
-                        choices = c("Choose one" = "",
-                                    "Number Of Cylindres" = "cyl",
+                        choices = c("Number Of Cylindres" = "cyl",
                                     "Displacement" = "disp",
                                     "Gross Horsepower" = "hp",
                                     "Rear Axle Ratio" = "drat",
@@ -26,8 +25,22 @@ shinyUI(fluidPage(
             ),
         # Show a plot of the generated distribution
         mainPanel(
-            h2(textOutput("caption")),
-            plotOutput("plot")
+            tabsetPanel(
+                tabPanel("Plot",
+                         h2(textOutput("caption")),
+                         plotOutput("plot")
+                         ),
+                tabPanel("Summary"),
+                tabPanel("Data", 
+                         tags$br(),
+                         tags$div(
+                             tags$p("A subset of the 'mtcars' dataset (Motor Trend Car Road Test) including the car models, the consumption in 'mile per gallon' and the selected variable.")
+                         ),
+                         hr(),
+                         dataTableOutput("rawData")
+                         )
+            )
         )
-    ))
+    )
+)
 )

@@ -15,30 +15,31 @@ shinyServer(function(input, output) {
     
     # Return the formula caption
     output$caption <- renderText({
-        if(input$variable != ""){
-            paste("Formula:" , formulaText())
-        }else{
-            ""
-        }
+        paste("Formula:" , formulaText())
     })
     
     output$plot <- renderPlot({
-        if(input$variable != ""){
-            if(any(input$variable == c("cyl", "am", "gear", "vs", "carb"))){
-                boxplot(as.formula(formulaText()),
-                        data = data,
-                        outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable)
-            }else{
-                g <- ggplot(data, aes(y = data[,"mpg"], x = data[,input$variable]))
-                g <- g + xlab(input$variable)
-                g <- g + ylab("mpg")
-                g <- g + geom_point(size = 5, color = "blue", alpha = 0.2)
-                g <- g + geom_smooth(method = "lm", color = "black")
-                g
-                   
-            }
+        
+        if(any(input$variable == c("cyl", "am", "gear", "vs", "carb"))){
+            boxplot(as.formula(formulaText()),
+                    data = data,
+                    outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable)
+        }else{
+            g <- ggplot(data, aes(y = data[,"mpg"], x = data[,input$variable]))
+            g <- g + xlab(input$variable)
+            g <- g + ylab("mpg")
+            g <- g + geom_point(size = 5, color = "blue", alpha = 0.2)
+            g <- g + geom_smooth(method = "lm", color = "black")
+            g
+            
         }
     })
-  
-  
+    
+    output$rawData <- renderDataTable({
+        data$models <- row.names(data)
+        data[, c("models", "mpg", input$variable)]
+    }, options = list(pageLength=10,lengthMenu=list(c(5,10,15,25,40,-1), c("5","10","15","25","40","All")))
+    )
+    
+    
 })
