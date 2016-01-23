@@ -11,7 +11,8 @@ shinyUI(fluidPage(
             # Select the variable from the mtcars dataset that you would like to investigate
             selectInput(inputId = "variable",
                         label = "Variable:",
-                        choices = c("Number Of Cylindres" = "cyl",
+                        choices = c("Choose one" = "",
+                                    "Number Of Cylindres" = "cyl",
                                     "Displacement" = "disp",
                                     "Gross Horsepower" = "hp",
                                     "Rear Axle Ratio" = "drat",
@@ -20,10 +21,9 @@ shinyUI(fluidPage(
                                     "V/S" = "vs",
                                     "Transmission (0 = auto, 1 = man)" = "am",
                                     "Number Of Forward Gears" = "gear",
-                                    "Number Of Carburetors" = "carb"),
-                        selected = "cyl"),
-            checkboxInput("outliers", "Show outliers", FALSE)
-        ),
+                                    "Number Of Carburetors" = "carb")
+                        )
+            ),
         # Show a plot of the generated distribution
         mainPanel(
             h2(textOutput("caption")),
