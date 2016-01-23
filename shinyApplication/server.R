@@ -13,18 +13,20 @@ shinyServer(function(input, output) {
         paste("mpg ~", input$variable)
     })
     
-    # Return the formula caption
+    # Output: the formula caption
     output$caption <- renderText({
         paste("Formula:" , formulaText())
     })
     
+    # Output: the plot to be renedered in the UI
     output$plot <- renderPlot({
-        
+        # If selected variable is categorical
         if(any(input$variable == c("cyl", "am", "gear", "vs", "carb"))){
             boxplot(as.formula(formulaText()),
                     data = data,
                     outline = TRUE, ylim = c(10,35), ylab = "mpg", xlab = input$variable)
         }else{
+            # If selected variable is continuous
             g <- ggplot(data, aes(y = data[,"mpg"], x = data[,input$variable]))
             g <- g + xlab(input$variable)
             g <- g + ylab("mpg")
@@ -35,6 +37,7 @@ shinyServer(function(input, output) {
         }
     })
     
+    # Output: a dataTable containing the raw data - car model, mpg, and selected variable
     output$rawData <- renderDataTable({
         data$models <- row.names(data)
         data[, c("models", "mpg", input$variable)]
