@@ -35,9 +35,12 @@ shinyUI(fluidPage(
               "10 aspects of automobile design and performance for 32 automobiles (1973–74 models)."),
             
             helpText("Note:"),
-            helpText("Plot: a scatterplot of the observations including the fitted linear model with 'mpg' (as the response) and selected",
-                    "variable as the predictor is shown. If the selected variable is categorical a box-and-whiskers plot is added.")
+            helpText("'Plot' tab: a scatterplot of the observations and the fitted linear model with 'mpg' (as the response) and selected",
+                    "variable as the predictor is shown. Optional, if the selected variable is categorical a box-and-whiskers plot is shown."),
             
+            helpText("'Summary' tab: summaries for the selected variable and the fitted linear regression model are shown."),
+            
+            helpText("'Data' tab: the data used for the plots and the linear regression model, a subset of the 'mtcars' dataset.")
             ),
         # The main panel contains a set of tabs
         # Plot: 
@@ -60,7 +63,14 @@ shinyUI(fluidPage(
                                           plotOutput("boxPlot")
                                           )
                          ),
-                tabPanel("Summary"),
+                tabPanel("Summary",
+                         br(),
+                         h5("Summary for the selected variable"),
+                         verbatimTextOutput("summaryVariable"),
+                         h5("Summary for the fitted linear regression model"),
+                         verbatimTextOutput("summaryLm")
+                         ),
+                        
                 tabPanel("Data", 
                          tags$br(),
                          tags$div(

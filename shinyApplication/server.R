@@ -5,8 +5,7 @@ library(shiny)
 
 shinyServer(function(input, output) {
     data <- mtcars
-    data$am <- factor(data$am, labels = c("Automatic", "Manual"))
-    
+
     # Compute the formula text in a reactive expression cause
     # shared by the output$caption and output$plot functions
     formulaText <- reactive({
@@ -44,6 +43,17 @@ shinyServer(function(input, output) {
         g
         
         
+    })
+    
+    # Output summary for the selected variable
+    output$summaryVariable <- renderPrint({
+        summary(data[, input$variable])
+    })
+    
+    # Output summary for the fitted regression model
+    output$summaryLm <- renderPrint({
+        formula_v <- as.formula(formulaText())
+        summary(lm(formula_v, data = data))
     })
     
     # Output: a dataTable containing the raw data - car model, mpg, and selected variable
