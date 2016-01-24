@@ -1,0 +1,8 @@
+name: fuelConsumptionDiscovery
+account: pparacch
+server: shinyapps.io
+bundleId: 356295
+url: https://pparacch.shinyapps.io/fuelConsumptionDiscovery/
+when: 1453589250.87891
+asMultiple: FALSE
+asStatic: FALSE
