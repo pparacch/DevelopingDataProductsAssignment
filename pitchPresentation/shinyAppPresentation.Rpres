@@ -1,0 +1,61 @@
+Exploring 'Mile Per Gallon' consumptions App
+========================================================
+author: Pier Lorenzo Paracchini
+date: 24.01.2016
+transition: rotate
+font-family: "Arial"
+width: 1440
+height: 900
+
+Exploratory Analysis Made Easy  
+========================================================
+A **simple** and **intuitive** application that can be used by **anyone** to **explore** how the **fuel comsumptions** is **affected** by **10 aspects/ features of automobile design and performance** using the `mtcars` dataset.
+
+<small><small>
+Assumptions:
+- **Response** variable ($Y$): Mile Per Gallon consumption (`mpg`) 
+- **Predictor** variable ($X$): any of the other features
+- **Simple Regression Model** between the **response** and selected **predictor**
+    - $Y = \beta_0 + \beta_1 X + \epsilon$ 
+    - where $\epsilon$ is $N(0, \sigma^2)$, and $\epsilon_i$ are iid
+</small></small>
+
+UI Overview
+========================================================
+<small>__SideBar Panel__ allows the user to select the **predictor** she/ he is interested in</small>
+
+<small>__Main Panel__ allows the user to view the information available for the selected **predictor**</small>
+
+<small><small>- __Plot__, shows a scatterplot and, an optional boxPlot, of the available observations **response ~ predictor**</small></small>
+
+<small><small>- __Summary__, shows some basic statistical information about the **predictor** and the fitted **simple regression model**</small></small>
+
+<small><small>- __Data__, shows the raw data used by the application, limited to the **response** and selected **predictor**</small></small>
+
+![UI Overview](img/uiOverview.png)  
+
+Simple Linear Regression Model Details
+========================================================
+<small>An example of how the simple regression model is fitted using the `mtcars` dataset. Note the __response__variable is `mpg` while the __predictor__ variable is `cyl`.</small>
+<small><small>
+```{r collapse = F, cache=T}
+library(datasets)
+fittedModel <- lm(mpg ~ cyl, data = mtcars)
+summary(fittedModel)
+```
+</small></small>
+
+Plot Details
+========================================================
+<small>An example of a scatterplot using the `mtcars` dataset, having `mpg` as __response__ variable and `cyl` as __predictor__ variable. The _black_ line represents the predictions made using the simple regression model fitted using the available observations.</small>
+
+```{r, echo=FALSE, cache=T}
+library(ggplot2)
+g <-ggplot(mtcars, aes(y = mtcars[,"mpg"], x = mtcars[,"cyl"]))
+    g <- g + xlab("cyl")
+    g <- g + ylab("mpg")
+    g <- g + ggtitle(paste("Scatterplot", "mpg ~ cyl"))
+    g <- g + geom_point(size = 5, color = "blue", alpha = 0.2)
+    g <- g + geom_smooth(method = "lm", color = "black")
+    g
+```
