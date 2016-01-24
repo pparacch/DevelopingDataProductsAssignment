@@ -7,6 +7,8 @@ font-family: "Arial"
 width: 1440
 height: 900
 
+<small>[Link to assignment Repository in GitHub](https://github.com/pparacch/DevelopingDataProductsAssignment)</small>
+
 Exploratory Analysis Made Easy  
 ========================================================
 A **simple** and **intuitive** application that can be used by **anyone** to **explore** how the **fuel comsumptions** is **affected** by **10 aspects/ features of automobile design and performance** using the `mtcars` dataset.
